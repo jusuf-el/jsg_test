@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   go_router:
   flutter_svg:
+  provider:
+  http:
+  expandable:
 
 dev_dependencies:
   flutter_test:
