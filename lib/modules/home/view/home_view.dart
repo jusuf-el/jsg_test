@@ -20,8 +20,6 @@ class _HomeViewState extends State<HomeView> {
   late HomeProvider homeProvider;
   final TextEditingController textEditingController = TextEditingController();
 
-  openEndDrawer() {}
-
   @override
   void initState() {
     super.initState();

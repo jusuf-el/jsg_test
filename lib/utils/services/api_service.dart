@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:jsg_test/data/constants/endpoints.dart';
 import 'package:jsg_test/data/models/comment.dart';
+import 'package:jsg_test/data/models/photo.dart';
 import 'package:jsg_test/data/models/post.dart';
 import 'package:jsg_test/data/models/user.dart';
 
@@ -83,5 +84,67 @@ class ApiService {
     }
 
     return mappedComments;
+  }
+
+  Future<List<Photo>> getPhotos(int? limit, int? page) async {
+    print('GETTING PHOTOS');
+    List<Photo> mappedPhotos = [];
+
+    List<Map<String, dynamic>> urlParameters = [
+      {'key': '_limit', 'value': limit},
+      {'key': '_page', 'value': page},
+    ];
+
+    print(Uri.parse(Endpoints.baseUrl +
+        Endpoints.photos +
+        Endpoints.setUrlParameters(urlParameters)));
+
+    try {
+      final response = await http.get(Uri.parse(Endpoints.baseUrl +
+          Endpoints.photos +
+          Endpoints.setUrlParameters(urlParameters)));
+      if (response.statusCode == 200) {
+        final List<dynamic> photos = json.decode(response.body);
+        mappedPhotos = photos.map((e) => Photo.fromJson(e)).toList();
+      } else {
+        if (kDebugMode) {
+          print('GET PHOTOS ERROR WITH CODE: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('GET PHOTOS ERROR: $e');
+        rethrow;
+      }
+    }
+
+    return mappedPhotos;
+  }
+
+  Future<int> getTotalPhotos() async {
+    print('GETTING TOTAL PHOTOS');
+    print(Uri.parse(Endpoints.baseUrl + Endpoints.photos));
+
+    int totalPhotos = 0;
+
+    try {
+      final response =
+          await http.get(Uri.parse(Endpoints.baseUrl + Endpoints.photos));
+      if (response.statusCode == 200) {
+        final List<dynamic> photos = json.decode(response.body);
+        totalPhotos = photos.length;
+      } else {
+        if (kDebugMode) {
+          print('GET TOTAL PHOTOS ERROR WITH CODE: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('GET TOTAL PHOTOS ERROR: $e');
+        rethrow;
+      }
+    }
+
+    return totalPhotos;
   }
 }
