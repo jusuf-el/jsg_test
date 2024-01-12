@@ -15,7 +15,22 @@ class PhotosProvider with ChangeNotifier {
 
   onLoadPreviousHeightChanged(double newHeight) {
     loadPreviousHeight = newHeight;
+
     notifyListeners();
+
+    if (loadPreviousHeight >= 75.0) {
+      onPageChanged(page - 1);
+    }
+  }
+
+  onLoadNextHeightChanged(double newHeight) {
+    loadNextHeight = newHeight;
+
+    notifyListeners();
+
+    if (loadNextHeight >= 75.0) {
+      onPageChanged(page + 1);
+    }
   }
 
   Future<void> onPageChanged(int newPage) async {
@@ -37,8 +52,12 @@ class PhotosProvider with ChangeNotifier {
   }
 
   getPhotos({bool isInitial = false}) async {
+    loadPreviousHeight = 0.0;
+    loadNextHeight = 0.0;
     loading = true;
     if (isInitial) {
+      limit = 10;
+      page = 1;
       totalPosts = await apiServices.getTotalPhotos();
     }
     photos = await apiServices.getPhotos(limit, page);
