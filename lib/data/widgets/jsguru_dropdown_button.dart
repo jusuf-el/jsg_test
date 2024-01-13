@@ -15,38 +15,42 @@ class JSGuruDropdownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-      value: dropdownValue,
-      style: Theme.of(context)
-          .textTheme
-          .titleMedium
-          ?.copyWith(color: Colors.white),
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      iconEnabledColor: Colors.white70,
-      dropdownColor: ColorConstants.appBarBackground.withOpacity(0.75),
-      alignment: Alignment.center,
-      borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-      items: List.generate(
-        items.length,
-        (index) {
-          return DropdownMenuItem(
-            value: items[index],
-            child: Text(
-              items[index].toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-          );
+    return SizedBox(
+      width: 85.0,
+      child: DropdownButton(
+        isExpanded: true,
+        value: dropdownValue,
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium
+            ?.copyWith(color: Colors.white),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        iconEnabledColor: Colors.white70,
+        dropdownColor: ColorConstants.appBarBackground.withOpacity(0.75),
+        alignment: Alignment.center,
+        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+        items: List.generate(
+          items.length,
+          (index) {
+            return DropdownMenuItem(
+              value: items[index],
+              child: Text(
+                items[index].toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            );
+          },
+        ),
+        onChanged: (value) {
+          if (value != null) {
+            onChanged(value as int);
+          }
         },
       ),
-      onChanged: (value) {
-        if (value != null) {
-          onChanged(value as int);
-        }
-      },
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:jsg_test/data/constants/color_constants.dart';
+import 'package:jsg_test/data/constants/text_constants.dart';
 import 'package:jsg_test/data/models/post.dart';
 
 class JSGuruPostTile extends StatelessWidget {
@@ -50,7 +51,8 @@ class JSGuruPostTile extends StatelessWidget {
             Text(post.title, style: Theme.of(context).textTheme.titleMedium),
             Row(
               children: [
-                Text('by ', style: Theme.of(context).textTheme.bodySmall),
+                Text(TextConstants.by,
+                    style: Theme.of(context).textTheme.bodySmall),
                 Text(post.user.name,
                     style: Theme.of(context).textTheme.labelSmall),
               ],
@@ -77,7 +79,7 @@ class JSGuruPostTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Comments (${post.comments.length})',
+            '${TextConstants.comments} ${TextConstants.valueInParenthesis(post.comments.length.toString())}',
             style: Theme.of(context).textTheme.titleSmall,
           ),
           ListView.separated(

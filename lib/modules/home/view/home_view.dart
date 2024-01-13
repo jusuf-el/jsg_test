@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jsg_test/data/constants/color_constants.dart';
+import 'package:jsg_test/data/constants/text_constants.dart';
+import 'package:jsg_test/data/models/post.dart';
 import 'package:jsg_test/data/widgets/jsguru_app_bar.dart';
 import 'package:jsg_test/data/widgets/jsguru_drawer.dart';
 import 'package:jsg_test/data/widgets/jsguru_input_field.dart';
+import 'package:jsg_test/data/widgets/jsguru_loader.dart';
 import 'package:jsg_test/modules/home/provider/home_provider.dart';
 import 'package:jsg_test/modules/home/widgets/jsguru_post_tile.dart';
+import 'package:jsg_test/utils/router/router.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -29,6 +32,11 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+  onPostTapped(Post post) {
+    context.goNamed(JSGuruRouter.postDetails, extra: post);
+    textEditingController.text = '';
+  }
+
   @override
   Widget build(BuildContext context) {
     homeProvider = Provider.of<HomeProvider>(context);
@@ -44,18 +52,14 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       body: homeProvider.loading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: ColorConstants.appBarBackground,
-              ),
-            )
+          ? const JSGuruLoader()
           : Column(
               children: [
                 Padding(
                   padding:
                       const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
                   child: JSGuruInputField(
-                    hintText: 'Search posts by author name',
+                    hintText: TextConstants.searchPosts,
                     textEditingController: textEditingController,
                   ),
                 ),
@@ -66,10 +70,7 @@ class _HomeViewState extends State<HomeView> {
                     itemBuilder: (context, index) {
                       return JSGuruPostTile(
                         post: homeProvider.filteredPosts[index],
-                        onPostTapped: (post) {
-                          context.goNamed('post_details', extra: post);
-                          textEditingController.text = '';
-                        },
+                        onPostTapped: onPostTapped,
                       );
                     },
                     separatorBuilder: (context, index) {

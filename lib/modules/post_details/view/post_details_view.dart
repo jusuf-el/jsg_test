@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jsg_test/data/constants/color_constants.dart';
+import 'package:jsg_test/data/constants/text_constants.dart';
 import 'package:jsg_test/data/models/comment.dart';
 import 'package:jsg_test/data/models/post.dart';
 import 'package:jsg_test/data/widgets/jsguru_app_bar.dart';
@@ -32,7 +33,7 @@ class PostDetailsView extends StatelessWidget {
                     ),
                     const SizedBox(height: 5.0),
                     Text(
-                      'Comments (${post.comments.length})',
+                      '${TextConstants.comments} ${TextConstants.valueInParenthesis(post.comments.length.toString())}',
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -84,69 +85,35 @@ class PostDetailsView extends StatelessWidget {
       children: [
         const SizedBox(height: 15.0),
         Divider(
-          height: 1.0,
-          thickness: 1.0,
-          color: Theme.of(context).dividerColor,
-        ),
+            height: 1.0, thickness: 1.0, color: Theme.of(context).dividerColor),
         const SizedBox(height: 5.0),
         Text(
-          'Author details',
+          TextConstants.authorDetails,
           style: Theme.of(context)
               .textTheme
               .titleLarge
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
-        RichText(
-          text: TextSpan(
-            text: 'Name: ',
-            style: Theme.of(context).textTheme.titleSmall,
-            children: [
-              TextSpan(
-                  text: post.user.name,
-                  style: Theme.of(context).textTheme.labelSmall),
-            ],
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            text: 'Email: ',
-            style: Theme.of(context).textTheme.titleSmall,
-            children: [
-              TextSpan(
-                  text: post.user.email,
-                  style: Theme.of(context).textTheme.labelSmall),
-            ],
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            text: 'Phone: ',
-            style: Theme.of(context).textTheme.titleSmall,
-            children: [
-              TextSpan(
-                  text: post.user.phone,
-                  style: Theme.of(context).textTheme.labelSmall),
-            ],
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            text: 'Company: ',
-            style: Theme.of(context).textTheme.titleSmall,
-            children: [
-              TextSpan(
-                  text: post.user.company.name,
-                  style: Theme.of(context).textTheme.labelSmall),
-            ],
-          ),
-        ),
+        authorDetailRow(context, TextConstants.name, post.user.name),
+        authorDetailRow(context, TextConstants.email, post.user.email),
+        authorDetailRow(context, TextConstants.phone, post.user.phone),
+        authorDetailRow(context, TextConstants.company, post.user.company.name),
         const SizedBox(height: 5.0),
         Divider(
-          height: 1.0,
-          thickness: 1.0,
-          color: Theme.of(context).dividerColor,
-        ),
+            height: 1.0, thickness: 1.0, color: Theme.of(context).dividerColor),
       ],
+    );
+  }
+
+  Widget authorDetailRow(BuildContext context, String label, String value) {
+    return RichText(
+      text: TextSpan(
+        text: label,
+        style: Theme.of(context).textTheme.titleSmall,
+        children: [
+          TextSpan(text: value, style: Theme.of(context).textTheme.labelSmall),
+        ],
+      ),
     );
   }
 

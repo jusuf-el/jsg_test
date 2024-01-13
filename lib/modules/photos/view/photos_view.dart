@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jsg_test/data/constants/color_constants.dart';
+import 'package:jsg_test/data/constants/text_constants.dart';
 import 'package:jsg_test/data/widgets/jsguru_app_bar.dart';
 import 'package:jsg_test/data/widgets/jsguru_dropdown_button.dart';
+import 'package:jsg_test/data/widgets/jsguru_loader.dart';
 import 'package:jsg_test/modules/photos/provider/photos_provider.dart';
 import 'package:jsg_test/modules/photos/widgets/photo_tile.dart';
 import 'package:provider/provider.dart';
@@ -40,11 +41,7 @@ class _PhotosViewState extends State<PhotosView> {
         ],
       ),
       body: photosProvider.loading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: ColorConstants.appBarBackground,
-              ),
-            )
+          ? const JSGuruLoader()
           : RefreshLoadmore(
               onRefresh: photosProvider.page == 1
                   ? null
@@ -52,7 +49,7 @@ class _PhotosViewState extends State<PhotosView> {
               onLoadmore: () =>
                   photosProvider.onPageChanged(photosProvider.page + 1),
               noMoreWidget: Text(
-                'No more data, you are at the end',
+                TextConstants.noMorePosts,
                 style: TextStyle(
                     fontSize: 18, color: Theme.of(context).disabledColor),
               ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jsg_test/data/constants/color_constants.dart';
 import 'package:jsg_test/data/models/photo.dart';
 
 class PhotoTile extends StatelessWidget {
@@ -17,22 +16,7 @@ class PhotoTile extends StatelessWidget {
           SizedBox(
             width: 150.0,
             height: 150.0,
-            child: Image.network(
-              photo.thumbnailUrl,
-              width: 150.0,
-              height: 150.0,
-              loadingBuilder: (context, widget, event) {
-                if (event?.expectedTotalBytes != event?.cumulativeBytesLoaded) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: ColorConstants.appBarBackground,
-                    ),
-                  );
-                } else {
-                  return widget;
-                }
-              },
-            ),
+            child: Image.network(photo.thumbnailUrl),
           ),
           const SizedBox(width: 15.0),
           Expanded(

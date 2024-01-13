@@ -28,11 +28,13 @@ class ApiService {
           return Post.fromJson(data);
         }).toList();
       } else {
+        // TODO - DISPLAYING ERROR MESSAGE
         if (kDebugMode) {
           print('GET POSTS ERROR WITH CODE: ${response.statusCode}');
         }
       }
     } catch (e) {
+      // TODO - DISPLAYING ERROR MESSAGE
       if (kDebugMode) {
         print('GET POSTS ERROR: $e');
         rethrow;
@@ -51,11 +53,13 @@ class ApiService {
         final List<dynamic> users = json.decode(response.body);
         mappedUsers = users.map((e) => User.fromJson(e)).toList();
       } else {
+        // TODO - DISPLAYING ERROR MESSAGE
         if (kDebugMode) {
           print('GET USERS ERROR WITH CODE: ${response.statusCode}');
         }
       }
     } catch (e) {
+      // TODO - DISPLAYING ERROR MESSAGE
       if (kDebugMode) {
         print('GET USERS ERROR WITH CODE: $e');
       }
@@ -73,11 +77,13 @@ class ApiService {
         final List<dynamic> comments = json.decode(response.body);
         mappedComments = comments.map((e) => Comment.fromJson(e)).toList();
       } else {
+        // TODO - DISPLAYING ERROR MESSAGE
         if (kDebugMode) {
           print('GET USERS ERROR WITH CODE: ${response.statusCode}');
         }
       }
     } catch (e) {
+      // TODO - DISPLAYING ERROR MESSAGE
       if (kDebugMode) {
         print('GET USERS ERROR WITH CODE: $e');
       }
@@ -87,17 +93,12 @@ class ApiService {
   }
 
   Future<List<Photo>> getPhotos(int? limit, int? page) async {
-    print('GETTING PHOTOS');
     List<Photo> mappedPhotos = [];
 
     List<Map<String, dynamic>> urlParameters = [
       {'key': '_limit', 'value': limit},
       {'key': '_page', 'value': page},
     ];
-
-    print(Uri.parse(Endpoints.baseUrl +
-        Endpoints.photos +
-        Endpoints.setUrlParameters(urlParameters)));
 
     try {
       final response = await http.get(Uri.parse(Endpoints.baseUrl +
@@ -107,11 +108,13 @@ class ApiService {
         final List<dynamic> photos = json.decode(response.body);
         mappedPhotos = photos.map((e) => Photo.fromJson(e)).toList();
       } else {
+        // TODO - DISPLAYING ERROR MESSAGE
         if (kDebugMode) {
           print('GET PHOTOS ERROR WITH CODE: ${response.statusCode}');
         }
       }
     } catch (e) {
+      // TODO - DISPLAYING ERROR MESSAGE
       if (kDebugMode) {
         print('GET PHOTOS ERROR: $e');
         rethrow;
@@ -122,9 +125,6 @@ class ApiService {
   }
 
   Future<int> getTotalPhotos() async {
-    print('GETTING TOTAL PHOTOS');
-    print(Uri.parse(Endpoints.baseUrl + Endpoints.photos));
-
     int totalPhotos = 0;
 
     try {
@@ -134,11 +134,13 @@ class ApiService {
         final List<dynamic> photos = json.decode(response.body);
         totalPhotos = photos.length;
       } else {
+        // TODO - DISPLAYING ERROR MESSAGE
         if (kDebugMode) {
           print('GET TOTAL PHOTOS ERROR WITH CODE: ${response.statusCode}');
         }
       }
     } catch (e) {
+      // TODO - DISPLAYING ERROR MESSAGE
       if (kDebugMode) {
         print('GET TOTAL PHOTOS ERROR: $e');
         rethrow;
